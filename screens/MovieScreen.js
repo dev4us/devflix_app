@@ -1,8 +1,15 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-const MovieScreen = () => {
-  return <Text>Movie</Text>;
+const MovieScreen = ({ navigation }) => {
+  return (
+    <>
+      <Text>Movie</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Detail")}>
+        <Text>Go to Detail</Text>
+      </TouchableOpacity>
+    </>
+  );
 };
 
 export default MovieScreen;

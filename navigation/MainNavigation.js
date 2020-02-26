@@ -11,7 +11,11 @@ const MainNavigator = () => {
     <NavigationContainer>
       <stack.Navigator>
         <stack.Screen name="Tab" component={TabNavigation} />
-        <stack.Screen name="Detail" component={DetailScreen} />
+        <stack.Screen
+          name="Detail"
+          component={DetailScreen}
+          options={{ headerBackTitleVisible: false }}
+        />
       </stack.Navigator>
     </NavigationContainer>
   );
