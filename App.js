@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { AppLoading } from "expo";
-
-import TabNavigation from "./navigation/TabNavigation";
+import MainNavigator from "./navigation/MainNavigation";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -20,7 +19,7 @@ function App() {
 
   return loaded === true ? (
     <>
-      <TabNavigation />
+      <MainNavigator />
     </>
   ) : (
     <AppLoading />
