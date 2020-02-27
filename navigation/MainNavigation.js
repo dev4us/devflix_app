@@ -10,7 +10,13 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <stack.Navigator>
-        <stack.Screen name="Tab" component={TabNavigation} />
+        <stack.Screen
+          name="Tab"
+          component={TabNavigation}
+          options={{
+            headerShown: false
+          }}
+        />
         <stack.Screen
           name="Detail"
           component={DetailScreen}
