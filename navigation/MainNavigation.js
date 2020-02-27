@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import TabNavigation from "./TabNavigation";
 import DetailScreen from "../screens/DetailScreen";
 import { NavigationContainer } from "@react-navigation/native";
+import { headerStyles } from "./NavigationConfig";
 
 const stack = createStackNavigator();
 
@@ -20,7 +21,7 @@ const MainNavigator = () => {
         <stack.Screen
           name="Detail"
           component={DetailScreen}
-          options={{ headerBackTitleVisible: false }}
+          options={{ headerBackTitleVisible: false, ...headerStyles }}
         />
       </stack.Navigator>
     </NavigationContainer>
