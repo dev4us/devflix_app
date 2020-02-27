@@ -5,32 +5,40 @@ import { movies } from "../api";
 
 const MovieScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(false);
-  const [upcoming, setUpcoming] = useState({});
-  const [popular, setPopular] = useState({});
-  const [nowPlaying, setNowPlaying] = useState({});
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    async function getUpcoming() {
-      const upcomingRes = await movies.getUpcoming();
-      setUpcoming(upcomingRes);
-    }
-    async function getPopular() {
-      const popularRes = await movies.getPopular();
-      setPopular(popularRes);
-    }
-    async function getNowPlaying() {
-      const nowPlayingRes = await movies.getNowPlaying();
-      setNowPlaying(nowPlayingRes);
+    async function callAPI() {
+      let upcomingRes, popularRes, nowPlayingRes;
+
+      try {
+        ({
+          data: { results: upcomingRes }
+        } = await movies.getUpcoming());
+
+        ({
+          data: { results: popularRes }
+        } = await movies.getPopular());
+
+        ({
+          data: { results: nowPlayingRes }
+        } = await movies.getNowPlaying());
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        setData({
+          upcoming: upcomingRes,
+          popular: popularRes,
+          nowPlaying: nowPlayingRes
+        });
+        setLoaded(true);
+      }
     }
 
-    getUpcoming();
-    getPopular();
-    getNowPlaying();
-    console.log(nowPlaying);
-    setLoaded(true);
+    callAPI();
   }, []);
 
-  return loaded === false ? (
+  return !loaded ? (
     <Loader />
   ) : (
     <>
