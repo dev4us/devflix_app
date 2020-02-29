@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import styled from "styled-components";
 import Loader from "../components/Loader";
 import { movies } from "../api";
+import MovieSlider from "../components/MovieSlider";
 
 const MovieScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(false);
@@ -41,13 +42,14 @@ const MovieScreen = ({ navigation }) => {
   return !loaded ? (
     <Loader />
   ) : (
-    <>
-      <Text>Movie</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Detail")}>
-        <Text>Go to Detail</Text>
-      </TouchableOpacity>
-    </>
+    <Container>
+      <MovieSlider movies={data.nowPlaying}></MovieSlider>
+    </Container>
   );
 };
+
+const Container = styled.ScrollView`
+  background-color: black;
+`;
 
 export default MovieScreen;
