@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ActivityIndicator, View } from "react-native";
-import { TINT_COLOR, BG_COLOR } from "../constans/Colors";
+import { TINT_COLOR, BG_COLOR } from "../constants/Colors";
 
 const Loader = () => (
   <Container>

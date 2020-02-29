@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { BG_COLOR } from "../constans/Colors";
+import { BG_COLOR } from "../constants/Colors";
 import TabBarIcon from "../components/TabBarIcon";
 
 import { MovieStackNavigator } from "./tab/MovieNavigation";

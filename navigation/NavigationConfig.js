@@ -1,4 +1,4 @@
-import { BG_COLOR, TINT_COLOR } from "../constans/Colors";
+import { BG_COLOR, TINT_COLOR } from "../constants/Colors";
 
 export const headerStyles = {
   headerStyle: {
