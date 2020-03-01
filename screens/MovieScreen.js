@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Loader from "../components/Loader";
 import { movies } from "../api";
 import MovieSlider from "../components/MovieSlider";
+import Section from "../components/Section";
 
 const MovieScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(false);
@@ -43,7 +44,10 @@ const MovieScreen = ({ navigation }) => {
     <Loader />
   ) : (
     <Container>
-      <MovieSlider movies={data.nowPlaying}></MovieSlider>
+      {data.nowPlaying ? <MovieSlider movies={data.nowPlaying} /> : null}
+      {data.upcoming ? (
+        <Section movies={data.upcoming} title="Upcoming Movies" />
+      ) : null}
     </Container>
   );
 };
