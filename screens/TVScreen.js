@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
+import styled from "styled-components";
 import Loader from "../components/Loader";
 import { tv } from "../api";
+import MovieItem from "../components/MovieItem";
+import Section from "../components/Section";
+import { BG_COLOR } from "../constants/Colors";
+
+const Container = styled.ScrollView`
+  background-color: ${BG_COLOR};
+`;
 
 const TVScreen = () => {
   const [loaded, setLoaded] = useState(false);
@@ -38,7 +45,42 @@ const TVScreen = () => {
     callAPI();
   }, []);
 
-  return !loaded ? <Loader /> : <Text>TV</Text>;
+  return !loaded ? (
+    <Loader />
+  ) : (
+    <Container>
+      {data.airingToday ? (
+        <Section title="Airing Today">
+          {data.airingToday
+            .filter(tv => tv.poster_path !== null)
+            .map(tv => (
+              <MovieItem
+                key={tv.id}
+                id={tv.id}
+                posterPhoto={tv.poster_path}
+                title={tv.name}
+                voteAvg={tv.vote_average}
+              />
+            ))}
+        </Section>
+      ) : null}
+      {data.topRated ? (
+        <Section title="Top Rated">
+          {data.topRated
+            .filter(tv => tv.poster_path !== null)
+            .map(tv => (
+              <MovieItem
+                key={tv.id}
+                id={tv.id}
+                posterPhoto={tv.poster_path}
+                title={tv.name}
+                voteAvg={tv.vote_average}
+              />
+            ))}
+        </Section>
+      ) : null}
+    </Container>
+  );
 };
 
 export default TVScreen;
