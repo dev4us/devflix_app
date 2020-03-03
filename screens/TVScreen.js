@@ -65,8 +65,23 @@ const TVScreen = () => {
         </Section>
       ) : null}
       {data.topRated ? (
-        <Section title="Top Rated">
+        <Section title="Airing this Week">
           {data.topRated
+            .filter(tv => tv.poster_path !== null)
+            .map(tv => (
+              <MovieItem
+                key={tv.id}
+                id={tv.id}
+                posterPhoto={tv.poster_path}
+                title={tv.name}
+                voteAvg={tv.vote_average}
+              />
+            ))}
+        </Section>
+      ) : null}
+      {data.popular ? (
+        <Section title="Popular">
+          {data.popular
             .filter(tv => tv.poster_path !== null)
             .map(tv => (
               <MovieItem
