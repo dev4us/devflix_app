@@ -57,6 +57,24 @@ const MovieScreen = ({ navigation }) => {
                 posterPhoto={movie.poster_path}
                 title={movie.title}
                 voteAvg={movie.vote_average}
+                overview={movie.overview}
+              />
+            ))}
+        </Section>
+      ) : null}
+      {data.popular ? (
+        <Section horizontal={false} title="Popular Movies">
+          {data.popular
+            .filter(movie => movie.poster_path !== null)
+            .map(movie => (
+              <MovieItem
+                horizontal={true}
+                key={movie.id}
+                id={movie.id}
+                posterPhoto={movie.poster_path}
+                title={movie.title}
+                overview={movie.overview}
+                voteAvg={movie.vote_average}
               />
             ))}
         </Section>
