@@ -1,8 +1,8 @@
 import React from "react";
 import { Text } from "react-native";
 
-const DetailScreen = () => {
-  return <Text>Detail</Text>;
+const DetailScreen = props => {
+  return <Text>{JSON.stringify(props)}</Text>;
 };
 
 export default DetailScreen;

@@ -60,6 +60,7 @@ const TVScreen = () => {
                 posterPhoto={tv.poster_path}
                 title={tv.name}
                 voteAvg={tv.vote_average}
+                isMovie={false}
               />
             ))}
         </Section>
@@ -75,21 +76,25 @@ const TVScreen = () => {
                 posterPhoto={tv.poster_path}
                 title={tv.name}
                 voteAvg={tv.vote_average}
+                isMovie={false}
               />
             ))}
         </Section>
       ) : null}
       {data.popular ? (
-        <Section title="Popular">
+        <Section title="Popular" horizontal={false}>
           {data.popular
             .filter(tv => tv.poster_path !== null)
             .map(tv => (
               <MovieItem
                 key={tv.id}
                 id={tv.id}
+                horizontal={true}
+                overview={tv.overview}
                 posterPhoto={tv.poster_path}
                 title={tv.name}
                 voteAvg={tv.vote_average}
+                isMovie={false}
               />
             ))}
         </Section>

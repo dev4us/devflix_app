@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useNavigation } from "@react-navigation/native";
 import makePhotoUrl from "../utils/makePhotoUrl";
 import Layout from "../constants/Layout";
 import MoviePoster from "./MoviePoster";
@@ -60,38 +61,43 @@ const BtnText = styled.Text`
 `;
 
 const MovieSlide = ({
+  id,
   posterPhoto,
   backgroundPhoto,
   title,
   voteAvg,
   overview
-}) => (
-  <Container>
-    <BgImage source={{ uri: makePhotoUrl(backgroundPhoto) }} />
-    <Content>
-      <MoviePoster path={posterPhoto} />
-      <Column>
-        <Title>{title}</Title>
-        {voteAvg ? (
-          <VoteContainer>
-            <MovieRating votes={voteAvg} inSlide={true} />
-          </VoteContainer>
-        ) : null}
-        {overview ? (
-          <Overview>
-            {overview.length > 117
-              ? `${overview.substring(0, 120)}...`
-              : overview}
-          </Overview>
-        ) : null}
-        <BtnContainer>
-          <BtnText>View details</BtnText>
-        </BtnContainer>
-      </Column>
-    </Content>
-  </Container>
-);
-
+}) => {
+  const navigation = useNavigation();
+  return (
+    <Container>
+      <BgImage source={{ uri: makePhotoUrl(backgroundPhoto) }} />
+      <Content>
+        <MoviePoster path={posterPhoto} />
+        <Column>
+          <Title>{title}</Title>
+          {voteAvg ? (
+            <VoteContainer>
+              <MovieRating votes={voteAvg} inSlide={true} />
+            </VoteContainer>
+          ) : null}
+          {overview ? (
+            <Overview>
+              {overview.length > 117
+                ? `${overview.substring(0, 120)}...`
+                : overview}
+            </Overview>
+          ) : null}
+          <BtnContainer
+            onPress={() => navigation.navigate("Detail", { isMovie: true, id })}
+          >
+            <BtnText>View details</BtnText>
+          </BtnContainer>
+        </Column>
+      </Content>
+    </Container>
+  );
+};
 MovieSlide.propTypes = {
   id: PropTypes.number.isRequired,
   posterPhoto: PropTypes.string.isRequired,

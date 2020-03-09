@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { TouchableWithoutFeedback } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components";
 import MoviePoster from "./MoviePoster";
 import MovieRating from "./MovieRating";
@@ -38,39 +40,50 @@ const MovieItem = ({
   title,
   voteAvg,
   horizontal = false,
-  overview
-}) =>
-  horizontal ? (
-    <HContainer>
-      <MoviePoster path={posterPhoto} />
-      <Column>
-        <Title big={true}>{title}</Title>
-        <MovieRating votes={voteAvg} />
-        {overview ? (
-          <Overview>
-            {overview.length > 150
-              ? `${overview.substring(0, 147)}...`
-              : overview}
-          </Overview>
-        ) : null}
-      </Column>
-    </HContainer>
-  ) : (
-    <Container>
-      <MoviePoster path={posterPhoto} />
-      <Title>
-        {title.length > 15 ? `${title.substring(0, 12)}...` : title}
-      </Title>
-      <MovieRating votes={voteAvg} />
-    </Container>
+  overview,
+  isMovie = true
+}) => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate("Detail", { isMovie, id })}
+    >
+      {horizontal ? (
+        <HContainer>
+          <MoviePoster path={posterPhoto} />
+          <Column>
+            <Title big={true}>{title}</Title>
+            <MovieRating votes={voteAvg} />
+            {overview ? (
+              <Overview>
+                {overview.length > 150
+                  ? `${overview.substring(0, 147)}...`
+                  : overview}
+              </Overview>
+            ) : null}
+          </Column>
+        </HContainer>
+      ) : (
+        <Container>
+          <MoviePoster path={posterPhoto} />
+          <Title>
+            {title.length > 15 ? `${title.substring(0, 12)}...` : title}
+          </Title>
+          <MovieRating votes={voteAvg} />
+        </Container>
+      )}
+    </TouchableWithoutFeedback>
   );
+};
 
 MovieItem.propTypes = {
   id: PropTypes.number.isRequired,
   posterPhoto: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   voteAvg: PropTypes.number.isRequired,
-  overview: PropTypes.string
+  overview: PropTypes.string,
+  isMovie: PropTypes.bool
 };
 
 export default MovieItem;
