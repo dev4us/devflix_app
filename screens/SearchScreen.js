@@ -3,6 +3,10 @@ import { TextInput } from "react-native";
 import { BG_COLOR, GREY_COLOR } from "../constants/Colors";
 import Layout from "../constants/Layout";
 import styled from "styled-components";
+import Loader from "../components/Loader";
+import Section from "../components/Section";
+import MovieItem from "../components/MovieItem";
+import { movies, tv } from "../api";
 
 const SearchScreen = () => {
   const [tvResults, setTvResults] = useState({});
@@ -10,10 +14,26 @@ const SearchScreen = () => {
   const [search, setSearch] = useState("");
   const [loaded, setLoaded] = useState(false);
 
-  const onSubmitEditing = () => {
+  const onSubmitEditing = async () => {
     if (search !== "") {
-      alert("searching..");
+      setLoaded(false);
+      try {
+        ({
+          data: { results: movieResultsRes }
+        } = await movies.searchMovies(search));
+        ({
+          data: { results: tvResultsRes }
+        } = await tv.searchTv(search));
+      } catch (e) {
+        alert(e.message);
+      } finally {
+        setLoaded(true);
+        setMovieResults(movieResultsRes);
+        setTvResults(tvResultsRes);
+        console.log(tvResults);
+      }
     }
+    return;
   };
   return (
     <Container>
@@ -28,6 +48,49 @@ const SearchScreen = () => {
           onSubmitEditing={onSubmitEditing}
         ></Input>
       </InputContainer>
+      <SearchResults>
+        {!loaded ? (
+          <Loader />
+        ) : (
+          <>
+            {movieResults ? (
+              movieResults.length > 0 ? (
+                <Section title="Movie Results">
+                  {movieResults
+                    .filter(movie => movie.poster_path !== null)
+                    .map(movie => (
+                      <MovieItem
+                        key={movie.id}
+                        id={movie.id}
+                        posterPhoto={movie.poster_path}
+                        title={movie.title}
+                        overview={movie.overview}
+                        voteAvg={movie.vote_average}
+                      />
+                    ))}
+                </Section>
+              ) : null
+            ) : null}
+            {!loaded ? (
+              tvResults.length > 0 ? (
+                <Section title="TV Results">
+                  {tvResults
+                    .filter(tv => tv.poster_path !== null)
+                    .map(tv => (
+                      <MovieItem
+                        key={tv.id}
+                        id={tv.id}
+                        posterPhoto={tv.poster_path}
+                        title={tv.name}
+                        voteAvg={tv.vote_average}
+                      />
+                    ))}
+                </Section>
+              ) : null
+            ) : null}
+          </>
+        )}
+      </SearchResults>
     </Container>
   );
 };
@@ -47,6 +110,10 @@ const Input = styled.TextInput`
   border-radius: 20px;
   padding: 10px;
   text-align: center;
+`;
+
+const SearchResults = styled.ScrollView`
+  margin-top: 20px;
 `;
 
 export default SearchScreen;
