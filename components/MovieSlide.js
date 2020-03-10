@@ -89,7 +89,17 @@ const MovieSlide = ({
             </Overview>
           ) : null}
           <BtnContainer
-            onPress={() => navigation.navigate("Detail", { isMovie: true, id })}
+            onPress={() =>
+              navigation.navigate("Detail", {
+                isMovie: true,
+                id,
+                posterPhoto,
+                backgroundPhoto,
+                title,
+                voteAvg,
+                overview
+              })
+            }
           >
             <BtnText>View details</BtnText>
           </BtnContainer>

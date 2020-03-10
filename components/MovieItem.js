@@ -47,7 +47,17 @@ const MovieItem = ({
 
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate("Detail", { isMovie, id })}
+      onPress={() =>
+        navigation.navigate("Detail", {
+          isMovie,
+          id,
+          posterPhoto,
+          backgroundPhoto: null,
+          title,
+          voteAvg,
+          overview
+        })
+      }
     >
       {horizontal ? (
         <HContainer>
